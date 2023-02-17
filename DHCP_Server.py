@@ -37,7 +37,6 @@ ip_address_pool = list(ip_address_pool)
 ip_address_pool = ip_address_pool[10:]
 
 
-
 # define a function to handle the DHCP messages and respond appropriately
 def handle_dhcp_message(message, client_address):
     message_type = message[0]
@@ -285,3 +284,11 @@ def get_new_ip_address():
     ip_address_pool.remove(ip_address)
     # return the IP address
     return ip_address
+
+
+# start listening for DHCP messages
+while True:
+    # receive DHCP messages
+    message, client_address = s.recvfrom(1024)
+    # handle the DHCP messages
+    handle_dhcp_message(message, client_address)
