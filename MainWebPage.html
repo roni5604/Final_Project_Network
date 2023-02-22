@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
   <!-- Menu Section -->
   <div class="w3-row w3-padding-64" id="prices">
     <div class="w3-col l6 w3-padding-large">
-      <h1 class="w3-center">Our Menu</h1><br>
+      <h1 class="w3-center">Our Prices</h1><br>
       <h4>cuplle room</h4>
       <p class="w3-text-grey">come with 2 bad in price of 5.50</p><br>
 
@@ -76,11 +76,17 @@ h1, h2, h3, h4, h5, h6 {
       </div>
     <hr>
     <div class="w3-container w3-padding-64" id="Order">
-    <h1>Contact</h1><br>
+    <h1>Make Order</h1><br>
     <p>We offer full-service contact us.</p>
     <form action="/action_page.php" target="_blank">
       <p><input class="w3-input w3-padding-16" type="text" placeholder="FullName" required name="FullName"></p>
         <p><input class="w3-input w3-padding-16" type="text" placeholder="Email" required name="Email"></p>
+      <p><input type="text" placeholder="Select Room" class="w3-input w3-padding-16" list="productName"/>
+        <p>  <datalist id="productName">
+      <option value="Pen">Pen</option>
+         <option value="Pencil">Pencil</option>
+         <option value="Paper">Paper</option>
+        </datalist></p>
         <p><input class="w3-input w3-padding-16" type="number" placeholder="How many Rooms" required name="RoomNumber"></p>
       <p><input class="w3-input w3-padding-16" type="number" placeholder="How many people" required name="People"></p>
       <p><input class="w3-input w3-padding-16" type="datetime-local" placeholder="Date and time to start" required name="date" value="2020-11-16T20:00"></p>
