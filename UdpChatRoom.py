@@ -11,7 +11,7 @@ clinets = []
 
 server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server.bind((Host, Port))
-server.listen(5)
+# server.listen(5)
 
 
 def receive_message(client):
