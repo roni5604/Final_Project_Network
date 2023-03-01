@@ -19,7 +19,7 @@ def catch_all(path):
 if __name__ == '__main__':
     app.run(debug=True)
 
-def client_handler(clinetAddress: tuple[str,int], clientPort: int, clientsocket: socket.socket,ServerAddress: tuple[str,int])
+def client_handler(clinetAddress: tuple[str,int], clientPort: int, clientsocket: socket.socket,ServerAddress: tuple[str,int]):
     client_prefix = clinetAddress[0]
     print(f"Client {client_prefix} connected")
     while True:
@@ -45,10 +45,11 @@ def server(host: str, port: int):
     treads = []
     print("listening on port: ", port, " : ", host)
     while True:
-        conn, addr = s.accept()
-        tread= threading.Thread(target=client_handler, args=(addr[0], addr[1], conn, (host, port)))
-        tread.start()
-        treads.append(t)
+        try:
+            conn, addr = s.accept()
+            tread= threading.Thread(target=client_handler, args=(addr[0], addr[1], conn, (host, port)))
+            tread.start()
+            treads.append(t)
         except KeyboardInterrupt:
             print("Shutting down server")
             for t in treads:
