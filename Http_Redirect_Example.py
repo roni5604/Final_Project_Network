@@ -19,7 +19,14 @@ class RedirectHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(file_contents)
 
-if __name__ == '__main__':
+
+def main():
     httpd = http.server.HTTPServer(('localhost', 8880), RedirectHandler)
     print('Server running on http://localhost:8880')
     httpd.serve_forever()
+
+
+
+if __name__ == '__main__':
+    main()
+
