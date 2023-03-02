@@ -5,11 +5,11 @@ import time
 import string
 import random
 import sys
-from httpServer import HttpServer , BaseHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 serverHost = 'localhost'
-serverPort = 5604
+serverPort = 1234
 
 
 class NeuralHTTP(BaseHTTPRequestHandler):
@@ -35,7 +35,6 @@ def main():
     httpClient.send(bytes("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n".encode('utf-8')))
     response = httpClient.recv(4096)
     print("response: %s" % response.decode('utf-8'))
-    httpClient.close()
 
 
 

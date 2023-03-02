@@ -5,15 +5,15 @@ import json
 import queue
 import random
 import string
-from httpServer import HttpServer , BaseHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 HOST = "localhost"
-PORT = 8080
+PORT = 1234
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverSocket.bind((HOST, PORT))
 serverSocket.listen(5)
-clientSocket, address = serverSocket.accept()
+
 
 class NeuralHTTP(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -32,14 +32,15 @@ class NeuralHTTP(BaseHTTPRequestHandler):
 
 
 def main():
-    httpd = HttpServer((HOST, PORT), NeuralHTTP)
+    clientSocket, address = serverSocket.accept()
+    httpd = HTTPServer((HOST, PORT), NeuralHTTP)
+    print("----------------------------------")
     print('Server running on http://localhost:8880')
     httpd.serve_forever()
     print(f"Connection established with {address}")
     print(clientSocket.recv(1024).decode())
     clientSocket.send(
         bytes("HTTP/1.1 200 OK \r\n\r\n<html><body><h1>Hello World from http server</h1></body></html>", "utf-8"))
-    clientSocket.close()
 
 
 if __name__ == "__main__":
