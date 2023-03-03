@@ -16,7 +16,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(f.read())
         elif self.path == '/download':
             # Download the file from the other server using wget
-            url = 'https://filesamples.com/samples/document/txt/sample3.txt'
+            url = 'http://filesamples.com/samples/document/txt/sample3.txt'
             file_name = url.split('/')[-1]
             subprocess.call(['wget', url])
 

@@ -170,6 +170,10 @@
     }
 
     function linkForDownloadElor(){
+        if(document.getElementById("UserName").value === "" || document.getElementById("Email").value === ""){
+            alert("Please fill all the fields");
+            return;
+        }
         const TicketModelID = document.getElementById("ticketModal");
         const elementID = TicketModelID.dataset.elementId;
         switch (elementID) {
