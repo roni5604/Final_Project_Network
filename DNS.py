@@ -46,12 +46,12 @@ def getflags(flags):
     OPCODE=''
     for bit in range(1,5):
         OPCODE += str(ord(byte1) & (1 << bit))
-    AA='1'
-    TC='0'
-    RD='0'
-    RA='0'
-    Z='000'
-    RCODE='0000'
+    AA='1' # Authoritative Answer
+    TC='0' # Truncation
+    RD='0' # Recursion Desired
+    RA='0' # Recursion Available
+    Z='000' # Reserved
+    RCODE='0000' # Response Code
     typeFlags = int(QereyResponse + OPCODE + AA + TC + RD ,2).to_bytes(1, byteorder='big')+int(RA + Z + RCODE,2).to_bytes(1, byteorder='big')
     return typeFlags
 
@@ -165,11 +165,6 @@ def make_response(data):
         dnsbody += rectobytes(domainName,rectype,record['ttl'],record['value'])
     print("DNS Body: ", dnsbody)
     return dnshdr + dnsQuestion + dnsbody
-
-
-
-
-
 
 
 
