@@ -3,7 +3,7 @@ import socketserver
 import subprocess
 import os
 HOST = "localhost"
-PORT = 12345
+PORT = 12348
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -27,7 +27,6 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Content-Length', f'{os.path.getsize(file_path)}')
             self.send_header('Content-Type', 'application/octet-stream')
             self.end_headers()
-            print("hhihihj")
             with open(file_path, 'rb') as f:
                 self.wfile.write(f.read())
             print(f"Downloaded file {file_name} from {url}")
