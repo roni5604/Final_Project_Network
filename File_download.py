@@ -66,8 +66,8 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(f.read())
                 print(f"Downloaded file {file_name} from {url}")
         elif self.path.startswith('/list') and self.path != '/list':
-            if self.path == '/list/Beginner_Tutorial':
-                url = 'http://localhost:5604/list/Beginner_Tutorial'
+            if self.path == '/list/Student_List':
+                url = 'http://localhost:5604/list/Student_List'
                 file_name = url.split('/')[-1]
                 subprocess.call(['wget', url])
 
