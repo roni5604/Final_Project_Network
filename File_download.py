@@ -2,8 +2,10 @@ import http.server
 import socketserver
 import subprocess
 import os
+
 HOST = "localhost"
 PORT = 12348
+
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -17,7 +19,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         elif self.path.startswith('/download') and self.path != '/download':
             if self.path == '/download/Beginner_Tutorial':
                 # Download the file from the other server using wget
-                url = 'http://filesamples.com/samples/document/txt/sample3.txt'
+                url = 'http://localhost:5604/Beginner_Tutorial.txt'
                 file_name = url.split('/')[-1]
                 subprocess.call(['wget', url])
 
@@ -33,7 +35,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                 print(f"Downloaded file {file_name} from {url}")
             elif self.path == '/download/Junior_Tuturial':
                 # Download the file from the other server using wget
-                url = 'http://filesamples.com/samples/document/txt/sample3.txt'
+                url = 'http://localhost:5604/Junior_Tutorial.txt'
                 file_name = url.split('/')[-1]
                 subprocess.call(['wget', url])
 
@@ -49,7 +51,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                 print(f"Downloaded file {file_name} from {url}")
             elif self.path == '/download/Full_Tuturial':
                 # Download the file from the other server using wget
-                url = 'http://filesamples.com/samples/document/txt/sample3.txt'
+                url = 'http://localhost:5604/Full_Tutorial.txt'
                 file_name = url.split('/')[-1]
                 subprocess.call(['wget', url])
 
@@ -80,8 +82,8 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(f.read())
                 print(f"Downloaded file {file_name} from {url}")
 
-
         return super().do_GET()
+
 
 Handler = MyHttpRequestHandler
 
