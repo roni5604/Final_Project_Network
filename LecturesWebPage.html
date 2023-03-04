@@ -17,7 +17,7 @@
         }
     </style>
 </head>
-<body>
+<body >
 <!-- Navbar -->
 <div class="w3-top">
     <div class="w3-bar w3-black w3-card">
@@ -133,9 +133,9 @@
             </header>
             <div class="w3-container">
                 <p><label><i class="fa fa-user"></i> Send To</label></p>
-                <input class="w3-input w3-border" type="text" placeholder="Enter Full Name" id="UserName">
-                <input class="w3-input w3-border" type="email" placeholder="Enter email" id="Email">
-              <button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right" onclick="linkForDownloadElor()">Download <i class="fa fa-check"></i></button>
+                <input class="w3-input w3-border" type="text" placeholder="Enter Full Name" id="UserName" required>
+                <input class="w3-input w3-border" type="email" placeholder="Enter email" id="Email" required="true">
+              <button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right" type="submit" onclick="linkForDownloadElor()">Download <i class="fa fa-check"></i></button>
             </div>
         </div>
     </div>
@@ -170,10 +170,8 @@
     }
 
     function linkForDownloadElor(){
-        if(document.getElementById("UserName").value === "" || document.getElementById("Email").value === ""){
-            alert("Please fill all the fields");
-            return;
-        }
+
+
         const TicketModelID = document.getElementById("ticketModal");
         const elementID = TicketModelID.dataset.elementId;
         switch (elementID) {
