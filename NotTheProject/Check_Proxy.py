@@ -7,7 +7,7 @@ import requests
 proxyQueue = queue.Queue()
 validProxy = []
 
-with open("Proxy_List.txt", "r") as f:
+with open("../Proxy_List.txt", "r") as f:
     proxies = f.read().splitlines()
     for proxy2 in proxies:
         proxyQueue.put(proxy2)
@@ -18,9 +18,7 @@ def Check_Proxy():
     while not proxyQueue.empty():
         proxy1 = proxyQueue.get()
         try:
-            response = requests.get("http://ipinfo.io/json",
-                                    proxies={"http": proxy1,
-                                             "https": proxy1})
+            response = requests.get("http://ipinfo.io/json",proxies={"http": proxy1, "https": proxy1})
         except:
             continue
 
