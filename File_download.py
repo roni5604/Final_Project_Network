@@ -2,9 +2,10 @@ import http.server
 import socketserver
 import subprocess
 import os
+import requests
 
 HOST = "localhost"
-PORT = 12348
+PORT = 1458
 
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -65,22 +66,21 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                 with open(file_path, 'rb') as f:
                     self.wfile.write(f.read())
                 print(f"Downloaded file {file_name} from {url}")
-        elif self.path.startswith('/list') and self.path != '/list':
-            if self.path == '/list/Student_List':
-                url = 'http://localhost:5604/list/Student_List'
-                file_name = url.split('/')[-1]
-                subprocess.call(['wget', url])
-
-                # Redirect the client to open the list of files
-                file_path = file_name
+        elif self.path.startswith('/List') and self.path != '/List':
+            if self.path == '/List/Student_List':
+                url = 'http://127.0.0.1:1234'
+                fileName= 'Server_files/Student_List.txt'
+                with requests.get(url) as response:
+                    with open(fileName, 'wb') as f:
+                        for chunk in response.iter_content(chunk_size=512):
+                            if chunk:
+                                f.write(chunk)
+                f.close()
                 self.send_response(200)
-                self.send_header('Content-Disposition', f'attachment; filename={file_name}')
-                self.send_header('Content-Length', f'{os.path.getsize(file_path)}')
+                self.send_header('Content-Disposition', f'attachment; filename={fileName}')
+                self.send_header('Content-Length', f'{os.path.getsize(fileName)}')
                 self.send_header('Content-Type', 'application/octet-stream')
                 self.end_headers()
-                with open(file_path, 'rb') as f:
-                    self.wfile.write(f.read())
-                print(f"Downloaded file {file_name} from {url}")
 
         return super().do_GET()
 
