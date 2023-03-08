@@ -67,7 +67,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(f.read())
                 print(f"Downloaded file {file_name} from {url}")
         elif self.path.startswith('/List') and self.path != '/List':
-            if self.path == '/List/Student_List':
+            if self.path == '/List/Student_Lis222t':
                 url = 'http://127.0.0.1:1234'
                 fileName= 'Server_files/Student_List.txt'
                 with requests.get(url) as response:
@@ -81,7 +81,10 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_header('Content-Length', f'{os.path.getsize(fileName)}')
                 self.send_header('Content-Type', 'application/octet-stream')
                 self.end_headers()
-
+            elif self.path == '/List/Student_List':
+                self.send_response(301)
+                self.send_header('Location', 'http://127.0.0.1:1234/List/Student_ListDownload')
+                self.end_headers()
         return super().do_GET()
 
 

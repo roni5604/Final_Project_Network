@@ -23,7 +23,6 @@ DNS_PORT = 53
 DNS_IP = '127.0.0.1' # DNS Server IP
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind((DNS_IP, DNS_PORT))
 
 def load_zone():
     zonefiles= glob.glob('zones/*.zone')
