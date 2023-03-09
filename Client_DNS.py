@@ -1,31 +1,40 @@
+
 import socket
 
-BUFFER = 512  # Buffer size
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server_address = ('127.0.0.1', 53)
+BUFF = 512
+sock.settimeout(5)
 
 
-def recv_ip(domain):
+def check_domain(domain):
+    return True
+
+
+while True:
+    # Receive the domain from user
     try:
-        ip = socket.gethostbyname(domain)
-        return ip  # If the domain is good and has IP
-    except socket.gaierror:
-        return None
-
-
-def dns_server(ip, port):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.bind((ip, port))
-    print(f"DNS SERVER STARTED {ip},{port}")
-
-    while True:
-        data, addr = sock.recvfrom(BUFFER)
-        domain = data.decode()
-        print(f"RECEIVED REQUEST FOR: {domain}")
-        ip_add = recv_ip(domain)
-        if ip_add is None:
-            print(f"THERE IS NO IP FOR THAT DOMAIN!! {domain}")
+        domain = input("Enter the domain you want(q to stop): ")
+        if domain == "q":
+            break
+        if check_domain(domain) is False:
+            print("ERROR WITH THIS DOMAIN NAME, TRY AGAIN")
             continue
-        print("SENDING IP ADDRESS")
-        sock.sendto(ip_add.encode(), addr)
+        msg = domain.encode('utf-8')
+        print(f"SENDING DNS QUERY FOR {domain}")
+        sock.sendto(msg, server_address)
+
+        data, server = sock.recvfrom(BUFF)
+        ip_add = data.decode('utf-8')
+        print(f"THE IP FOR {domain} is {ip_add}")
+    except socket.gaierror:
+        print("COULD NOT FIND IP FOR THIS DOMAIN!")
+    except socket.timeout:
+        print("THAT IS NOT A VALID DOMAIN PLEASE TRY AGAIN")
+    except Exception as e:
+        print("ERROR: {e}")
+
+sock.close()
 
 
-dns_server('127.0.0.1', 53)
+
