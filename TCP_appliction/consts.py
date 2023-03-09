@@ -1,0 +1,4 @@
+PROXY_HOST = "localhost"
+PROXY_PORT = 5604
+FILES_SERVER_HOST = "localhost"
+FILES_SERVER_PORT = 5605

@@ -27,7 +27,6 @@
         <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
         <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ABOUT US</a>
         <a href="#lectures" class="w3-bar-item w3-button w3-padding-large w3-hide-small">LECTURES</a>
-        <a href="#costumerList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">RECOMMENDS</a>
         <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
     </div>
 </div>
@@ -142,28 +141,11 @@
     </div>
     <!-- End of Ticket Modal -->
 
-       <!-- The Contact Section -->
-    <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="costumerList">
-        <h2 class="w3-wide w3-center">OUR STUDENTS</h2>
-        <p class="w3-opacity w3-center"><i>download the list of our student!</i></p>
-        <div class="w3-row w3-padding-32">
-              <div class="w3-third w3-margin-bottom">
-                    <img src="imges/lectur3.jpeg" alt="Student List" style="width:100%" class="w3-hover-opacity">
-                    <div class="w3-container w3-white">
-                        <p><b>Student List</b></p>
-                        <p class="w3-opacity">one List Combaine all</p>
-                        <p>The infromation is about the bla bla that wee need to add here.</p>
-                        <button class="w3-button w3-black w3-margin-bottom"
-                                onclick="ListRequst()">GET Student List
-                        </button>
-                    </div>
-                </div>
-        </div>
+
 
     </div>
 
     <!-- The Contact Section -->
-     <div class="w3-black"  id="contact1">
     <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
         <h2 class="w3-wide w3-center">CONTACT</h2>
         <p class="w3-opacity w3-center"><i>getting trouble connect us!</i></p>
@@ -175,7 +157,6 @@
             </div>
         </div>
     </div>
-     </div>
 
 
 
@@ -205,13 +186,13 @@
         const elementID = TicketModelID.dataset.elementId;
         switch (elementID) {
             case '1':
-               window.open('/download/Beginner_Tutorial')
+               window.open('http://localhost:5604/files/Beginner_Tutorial.txt')
                 break;
             case '2':
-             window.open('/download/Junior_Tuturial')
+             window.open('http://localhost:5604/files/Junior_Tutorial.txt')
                 break;
             case '3':
-              window.open('/download/Full_Tuturial')
+              window.open('http://localhost:5604/files/Full_Tutorial.txt')
               break;
         }
     }
