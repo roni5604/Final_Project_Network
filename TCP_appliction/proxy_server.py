@@ -2,12 +2,14 @@ import socket
 from consts import PROXY_HOST, PROXY_PORT, FILES_SERVER_HOST, FILES_SERVER_PORT
 from helpers import to_html_format_Redirect
 
+# function to run our proxy
 def main_proxy():
-    # create a socket object
+    # create a TCP socket
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # set the socket to unblocking mode to multiply use of the connection
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    # bind the socket to a public host and port
+    # bind the socket to our host and port
     server_socket.bind((PROXY_HOST, PROXY_PORT))
 
     # listen for incoming connections
@@ -19,7 +21,7 @@ def main_proxy():
         # accept incoming client connections
         client_connection, client_address = server_socket.accept()
 
-        # get the request data
+        # get the request data as string
         request_data = client_connection.recv(1024).decode()
 
         # parse the request data
@@ -28,18 +30,10 @@ def main_proxy():
         if len(request_line) == 0:
             continue
         request_method, path, http_version = request_line.split(" ")
-
+        # set the location to use
         location_header = f'Location: http://{FILES_SERVER_HOST}:{FILES_SERVER_PORT}{path}\r\n'
 
-        # # construct the response data for a 301 redirect
-        # response_headers = [
-        #     'HTTP/1.1 301 Moved Permanently',
-        #     location_header,
-        #     'Connection: close',
-        #     '',
-        #     ''
-        # ]
-        # response_data = '\r\n'.join(response_headers).encode()
+        # organize the response as redirect format by the location
         response_data = to_html_format_Redirect(location_header)
 
         # send the response data back to the client
@@ -49,5 +43,6 @@ def main_proxy():
         client_connection.close()
 
 
+# to run all the code
 if __name__ == '__main__':
     main_proxy()
