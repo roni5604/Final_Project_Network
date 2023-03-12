@@ -22,31 +22,31 @@ def main_tcp():
 
     print(f'Serving files on {FILES_SERVER_HOST}:{FILES_SERVER_PORT}...')
 
-    #
+
     while True:
         # accept incoming client connections
         client_connection, client_address = server_socket.accept()
 
-        # get the request data
+        # get the request data in string
         request_data = client_connection.recv(1024).decode()
 
-        # parse the request data
+        # organize the request data
         request_lines = request_data.split('\r\n')
         request_line = request_lines[0]
         request_method, path, http_version = request_line.split()
 
-        # construct the file path
+        # file path
         file_path = os.path.join(BASE_DIR, path[1:])
         # check if file exists and is readable
         if os.path.exists(file_path) and os.path.isfile(file_path) and os.access(file_path, os.R_OK):
             # read the file content
             with open(file_path, 'rb') as f:
                 file_content = f.read()
-
+            # parse response as a html OK format
             response_data = to_html_format_OK(file_path, file_content)
 
         else:
-            # construct the response data for a 404 Not Found error
+            # organize the response data for a '404 Not Found' error
             response_data = b'HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n'
 
         # send the response data back to the client
@@ -56,5 +56,6 @@ def main_tcp():
         client_connection.close()
 
 
+# to run everything
 if __name__ == '__main__':
     main_tcp()

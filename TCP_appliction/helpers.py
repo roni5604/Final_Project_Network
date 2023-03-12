@@ -1,6 +1,7 @@
 import os
 
 
+# function to simply get any kind of file for our comfort
 def get_content_type(file_path):
     """Returns the Content-Type for the given file path"""
     ext = os.path.splitext(file_path)[1].lower()
@@ -23,6 +24,7 @@ def get_content_type(file_path):
 
 
 def to_html_format_OK(file_path, file_content):
+    # organize the response as '200 OK' format
     response_headers = [
         f'HTTP/1.1 200 OK',
         f'Content-Type: {get_content_type(file_path)}',
@@ -36,7 +38,7 @@ def to_html_format_OK(file_path, file_content):
 
 
 def to_html_format_Redirect(location_header):
-    # construct the response data for a 301 redirect
+    # organize the response data for a 301 redirect
     response_headers = [
         'HTTP/1.1 301 Moved Permanently',
         location_header,
