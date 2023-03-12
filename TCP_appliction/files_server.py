@@ -1,18 +1,20 @@
-from helpers import get_content_type
+from helpers import to_html_format_OK
 from consts import FILES_SERVER_HOST, FILES_SERVER_PORT
 import socket
 import os
 
+# get the base directory of the project
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-
+# the function to run the TCP communication with the client
 def main_tcp():
-    # create a socket object
+    # create a TCP socket
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # set the socket to unblocking mode to multiply use of the connection
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    # bind the socket to a public host and port
+    # bind the socket to our host and port
     server_socket.bind((FILES_SERVER_HOST, FILES_SERVER_PORT))
 
     # listen for incoming connections
@@ -20,6 +22,7 @@ def main_tcp():
 
     print(f'Serving files on {FILES_SERVER_HOST}:{FILES_SERVER_PORT}...')
 
+    #
     while True:
         # accept incoming client connections
         client_connection, client_address = server_socket.accept()
@@ -40,17 +43,7 @@ def main_tcp():
             with open(file_path, 'rb') as f:
                 file_content = f.read()
 
-            # construct the response data for a file download
-            response_headers = [
-                f'HTTP/1.1 200 OK',
-                f'Content-Type: {get_content_type(file_path)}',
-                f'Content-Length: {len(file_content)}',
-                f'Content-Disposition: attachment; filename="{os.path.basename(file_path)}"',
-                'Connection: close',
-                '',
-                ''
-            ]
-            response_data = '\r\n'.join(response_headers).encode() + file_content
+            response_data = to_html_format_OK(file_path, file_content)
 
         else:
             # construct the response data for a 404 Not Found error
