@@ -23,7 +23,7 @@ def get_content_type(file_path):
         return 'application/octet-stream'
 
 
-def to_html_format_OK(file_path, file_content):
+def to_http_format_OK(file_path, file_content):
     # organize the response as '200 OK' format
     response_headers = [
         f'HTTP/1.1 200 OK',
@@ -37,7 +37,7 @@ def to_html_format_OK(file_path, file_content):
     return '\r\n'.join(response_headers).encode() + file_content
 
 
-def to_html_format_Redirect(location_header):
+def to_http_format_Redirect(location_header):
     # organize the response data for a 301 redirect
     response_headers = [
         'HTTP/1.1 301 Moved Permanently',
@@ -47,3 +47,23 @@ def to_html_format_Redirect(location_header):
         ''
     ]
     return '\r\n'.join(response_headers).encode()
+
+def check_domain(domain):
+    domain_split = domain.split(".")
+    if len(domain_split) < 2:
+        return False
+    if domain.startswith("www.") is False:
+        return False
+    if domain.endswith(".com") is True:
+        return True
+    if domain.endswith(".co.il") is True:
+        return True
+    if domain.endswith(".gov.il") is True:
+        return True
+    if domain.endswith(".net") is True:
+        return True
+    if domain.endswith(".org") is True:
+        return True
+    if domain.endswith(".edu") is True:
+        return True
+    return False

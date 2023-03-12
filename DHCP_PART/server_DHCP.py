@@ -44,7 +44,12 @@ def handle_dhcp_discover(packet):
                  IP(src=ip_range+"130", dst="255.255.255.255")/ \
                  UDP(sport=67, dport=68)/ \
                  BOOTP(op=2, yiaddr=ip_new, siaddr=ip_range+"130", giaddr="0.0.0.0", xid=packet[BOOTP].xid,chaddr=client_mac)/ \
-                 DHCP(options=[("message-type", "offer"), ("server_id", ip_range+"130"), ("subnet_mask", "255.255.255.0"), ("lease_time", LEASE_TIME), ("router", ip_range + "2"), "end"])
+                 DHCP(options=[("message-type", "offer"),
+                               ("server_id", ip_range+"130"),
+                               ("subnet_mask", "255.255.255.0"),
+                               ("lease_time", LEASE_TIME),
+                               ("router", ip_range + "2"),
+                               "end"])
 
     print("server send offer")
     # Send the DHCP Offer packet
@@ -53,7 +58,6 @@ def handle_dhcp_discover(packet):
 
 # Define a function to handle DHCP Request messages
 def handle_dhcp_request(packet):
-
     # Extract the IP address requested by the client
     requested_ip = packet[BOOTP].ciaddr
 

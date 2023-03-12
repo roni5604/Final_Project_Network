@@ -1,4 +1,4 @@
-from helpers import to_html_format_OK
+from helpers import to_http_format_OK
 from consts import FILES_SERVER_HOST, FILES_SERVER_PORT
 import socket
 import os
@@ -43,7 +43,7 @@ def main_tcp():
             with open(file_path, 'rb') as f:
                 file_content = f.read()
             # parse response as a html OK format
-            response_data = to_html_format_OK(file_path, file_content)
+            response_data = to_http_format_OK(file_path, file_content)
 
         else:
             # organize the response data for a '404 Not Found' error

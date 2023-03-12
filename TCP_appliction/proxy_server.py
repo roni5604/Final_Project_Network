@@ -1,6 +1,6 @@
 import socket
 from consts import PROXY_HOST, PROXY_PORT, FILES_SERVER_HOST, FILES_SERVER_PORT
-from helpers import to_html_format_Redirect
+from helpers import to_http_format_Redirect
 
 # function to run our proxy
 def main_proxy():
@@ -34,7 +34,7 @@ def main_proxy():
         location_header = f'Location: http://{FILES_SERVER_HOST}:{FILES_SERVER_PORT}{path}\r\n'
 
         # organize the response as redirect format by the location
-        response_data = to_html_format_Redirect(location_header)
+        response_data = to_http_format_Redirect(location_header)
 
         # send the response data back to the client
         client_connection.sendall(response_data)
