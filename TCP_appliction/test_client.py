@@ -8,7 +8,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # connect to the proxy server
 client_socket.connect((PROXY_HOST, PROXY_PORT))
 
-# send a GET request for the file "test.html"
+# send a GET request for the file "test.txt"
 request_data = b'GET /TCP_appliction/test.txt HTTP/1.1\r\nHost: localhost:5604\r\n\r\n'
 client_socket.sendall(request_data)
 

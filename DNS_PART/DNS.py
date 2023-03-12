@@ -50,7 +50,7 @@ def getflags(flags):
     RA = '0'  # Recursion Available
     Z = '000'  # Reserved
     RCODE = '0000'  # Response Code
-    return '1001010000000000'
+    return b'1001010000000000'
 
 
 def getQuestionDomain(data):
@@ -81,10 +81,10 @@ def getQuestionDomain(data):
     return (domainInparts, qustiontype)
 
 
-# def getZone(domain):
-#     global zoneData
-#     zone_name = '.'.join(domain)
-#     return zoneData[zone_name]
+def getZone(domain):
+    global zoneData
+    zone_name = '.'.join(domain)
+    return zoneData[zone_name]
 
 
 def getRecs(data):

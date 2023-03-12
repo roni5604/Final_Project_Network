@@ -32,6 +32,7 @@ xid = random.randint(0, 0xFFFFFFF)
 mac_addr = get_if_raw_hwaddr(conf.iface)[1]
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 clientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+clientSocket.bind((SRC, clientPort))
 
 
 class DHCPDiscover:
@@ -62,9 +63,10 @@ class DHCPDiscover:
         self.end = '\xff'
         pkt1 = self.op + self.htype + self.hlen + self.hops + str(
             self.xid) + self.secs + self.flags + self.ciaddr + self.yiaddr + self.siaddr + self.giaddr + self.chaddr + self.chwpadding + self.sname + self.file + self.magic_cookie + self.msg_type + self.client_id + self.param_req_list + self.end
-        discover = Ether(dst="ff:ff:ff:ff:ff:ff") / IP(src="0.0.0.0", dst="255.255.255.255") / UDP(sport=68,
-                                                                                                   dport=67) / BOOTP(
-            chaddr=mac_addr) / DHCP(pkt1)
+        discover = Ether(dst="ff:ff:ff:ff:ff:ff") /\
+                   IP(src="0.0.0.0", dst="255.255.255.255") / \
+                   UDP(sport=68,dport=67) / BOOTP(chaddr=mac_addr) / \
+                   DHCP(options=[("message-type", "discover"), "end"])
         return discover
 
 

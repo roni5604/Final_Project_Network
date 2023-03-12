@@ -1,6 +1,7 @@
 import socket
 from consts import PROXY_HOST, PROXY_PORT, FILES_SERVER_HOST, FILES_SERVER_PORT
 
+
 # create a socket object
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -43,3 +44,4 @@ while True:
 
     # close the client connection
     client_connection.close()
+

@@ -8,6 +8,20 @@ sock.settimeout(5)
 
 
 def check_domain(domain):
+    if domain.startswith("www.") is False:
+        return False
+    elif domain.endswith(".com") is False:
+        return False
+    elif domain.endswith(".net") is False:
+        return False
+    elif domain.endswith(".org") is False:
+        return False
+    elif domain.endswith(".edu") is False:
+        return False
+    elif domain.endswith(".gov") is False:
+        return False
+    elif domain.endswith(".co.il") is False:
+        return False
     return True
 
 
