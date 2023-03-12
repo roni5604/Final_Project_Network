@@ -1,54 +1,58 @@
 
 import socket
+from time import sleep
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_address = ('127.0.0.1', 53)
 BUFF = 512
 sock.settimeout(5)
 
-
 def check_domain(domain):
+    domain_split = domain.split(".")
+    if len(domain_split) < 2:
+        return False
     if domain.startswith("www.") is False:
         return False
-    elif domain.endswith(".com") is False:
-        return False
-    elif domain.endswith(".net") is False:
-        return False
-    elif domain.endswith(".org") is False:
-        return False
-    elif domain.endswith(".edu") is False:
-        return False
-    elif domain.endswith(".gov") is False:
-        return False
-    elif domain.endswith(".co.il") is False:
-        return False
-    return True
+    if domain.endswith(".com") is True:
+        return True
+    if domain.endswith(".co.il") is True:
+        return True
+    if domain.endswith(".gov.il") is True:
+        return True
+    if domain.endswith(".net") is True:
+        return True
+    if domain.endswith(".org") is True:
+        return True
+    if domain.endswith(".edu") is True:
+        return True
+    return False
+
+def client_request():
+    while True:
+        try:
+            print("")
+            domain = input("Write an Address of the domaim you want to get (q to stop): ")
+            if domain == "q":
+                break
+            if check_domain(domain) is False:
+                print("ERROR IN DOMAIN, CHECK THE DOMAIN AND TRY AGAIN")
+                continue
+            msg = domain.encode('utf-8')
+            print(f"Look for ip to  {domain}")
+            sock.sendto(msg, server_address)
+            sleep(1)
+            data, server = sock.recvfrom(BUFF)
+            ip_add = data.decode('utf-8')
+            print(f"Found ip for {domain} The ip is  {ip_add}")
+        except socket.timeout:
+            print("NO IP FOUND FOR THIS DOMAIN, CHECK THE DOMAIN AND TRY AGAIN")
+
+    sock.close()
+
+if __name__ == '__main__':
+    client_request()
 
 
-while True:
-    # Receive the domain from user
-    try:
-        domain = input("Enter the domain you want(q to stop): ")
-        if domain == "q":
-            break
-        if check_domain(domain) is False:
-            print("ERROR WITH THIS DOMAIN NAME, TRY AGAIN")
-            continue
-        msg = domain.encode('utf-8')
-        print(f"SENDING DNS QUERY FOR {domain}")
-        sock.sendto(msg, server_address)
-
-        data, server = sock.recvfrom(BUFF)
-        ip_add = data.decode('utf-8')
-        print(f"THE IP FOR {domain} is {ip_add}")
-    except socket.gaierror:
-        print("COULD NOT FIND IP FOR THIS DOMAIN!")
-    except socket.timeout:
-        print("THAT IS NOT A VALID DOMAIN PLEASE TRY AGAIN")
-    except Exception as e:
-        print("ERROR: {e}")
-
-sock.close()
 
 
 
